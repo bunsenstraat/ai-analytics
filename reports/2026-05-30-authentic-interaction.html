@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remix IDE · AI Chat Authentic Interaction Report · 2026-05-30</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0f0f0f;
+    --white: #fafafa;
+    --gray-100: #f2f2f0;
+    --gray-200: #e4e4e0;
+    --gray-400: #9a9a94;
+    --gray-600: #5a5a54;
+    --accent: #1a1aff;
+    --accent-light: #e8e8ff;
+    --green: #1a7a3c;
+    --green-light: #e6f4ec;
+    --amber: #7a4a00;
+    --amber-light: #fff4e0;
+    --border: 1px solid var(--gray-200);
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    background: var(--white);
+    color: var(--black);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* Header */
+  .header { border-bottom: 2px solid var(--black); padding-bottom: 20px; margin-bottom: 40px; }
+  .header-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .header h1 { font-size: 28px; font-weight: 500; line-height: 1.2; margin-bottom: 8px; }
+  .header-meta { font-size: 13px; color: var(--gray-600); }
+
+  /* Callout box */
+  .callout { background: var(--amber-light); border-left: 3px solid #d4880a; padding: 14px 18px; margin-bottom: 40px; border-radius: 0 4px 4px 0; }
+  .callout p { font-size: 13px; color: var(--amber); line-height: 1.6; }
+  .callout strong { font-weight: 500; }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px; padding-bottom: 8px; border-bottom: var(--border); }
+
+  /* Metric grid */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border: var(--border); margin-bottom: 40px; }
+  .metric { background: var(--white); padding: 20px; }
+  .metric-value { font-size: 36px; font-weight: 300; line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .metric-label { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+  .metric-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+  /* Funnel */
+  .funnel { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--gray-200); border: var(--border); margin-bottom: 12px; }
+  .funnel-step { background: var(--white); padding: 20px; position: relative; }
+  .funnel-step::after { content: '→'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--gray-400); z-index: 1; }
+  .funnel-step:last-child::after { display: none; }
+  .funnel-n { font-size: 32px; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .funnel-label { font-size: 12px; color: var(--gray-600); }
+  .funnel-pct { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+  .funnel-note { font-size: 12px; color: var(--gray-400); margin-bottom: 40px; }
+
+  /* Bar chart */
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bar-name { font-size: 12px; color: var(--gray-600); min-width: 180px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-track { flex: 1; height: 8px; background: var(--gray-100); border-radius: 1px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 1px; background: var(--black); }
+  .bar-fill-accent { background: var(--accent); }
+  .bar-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); min-width: 32px; text-align: right; }
+
+  /* Canned table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; font-size: 11px; color: var(--gray-400); padding: 6px 12px 6px 0; border-bottom: 2px solid var(--black); letter-spacing: 0.03em; }
+  td { padding: 9px 12px 9px 0; border-bottom: var(--border); color: var(--black); vertical-align: top; }
+  td:last-child { text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--gray-600); }
+  tr:last-child td { border-bottom: none; }
+
+  /* Insight box */
+  .insight { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 16px 20px; margin-top: 40px; }
+  .insight h3 { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--accent); }
+  .insight ul { padding-left: 16px; }
+  .insight li { font-size: 13px; color: var(--black); margin-bottom: 6px; line-height: 1.5; }
+
+  /* Authentic prompt samples */
+  .sample-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sample-card { border: var(--border); padding: 14px; border-radius: 2px; background: var(--gray-100); }
+  .sample-text { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-600); line-height: 1.6; word-break: break-word; }
+  .sample-tag { display: inline-block; font-size: 10px; font-family: 'IBM Plex Mono', monospace; padding: 2px 6px; background: var(--green-light); color: var(--green); border-radius: 2px; margin-bottom: 8px; }
+
+  /* Footer */
+  .footer { margin-top: 60px; padding-top: 20px; border-top: var(--border); font-size: 12px; color: var(--gray-400); font-family: 'IBM Plex Mono', monospace; display: flex; justify-content: space-between; }
+
+  @media print {
+    body { padding: 20px; }
+    .sample-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-eyebrow">Remix IDE · AI Feature Analytics</p>
+  <h1>Authentic User Interaction Report</h1>
+  <p class="header-meta">Date: 2026-05-30 &nbsp;·&nbsp; Segment: Manual AI Prompt &nbsp;·&nbsp; Source: Matomo event log</p>
+</div>
+
+<div class="callout">
+  <p><strong>Context:</strong> This report covers a single day (2026-05-30). All figures are for one day of activity. The goal is to distinguish users who genuinely engaged with the AI in their own words from those who only clicked pre-written prompt buttons.</p>
+</div>
+
+<!-- Overview -->
+<div class="section">
+  <p class="section-label">Overview</p>
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-value">515</div>
+      <div class="metric-label">Total users with AI activity</div>
+      <div class="metric-sub">unique sessions</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">1,306</div>
+      <div class="metric-label">Total prompts sent</div>
+      <div class="metric-sub">avg 2.5 per user</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">590</div>
+      <div class="metric-label">Canned prompts (buttons)</div>
+      <div class="metric-sub">45% of total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">716</div>
+      <div class="metric-label">Manual prompts (typed)</div>
+      <div class="metric-sub">55% of total</div>
+    </div>
+  </div>
+</div>
+
+<!-- Authentic interaction funnel -->
+<div class="section">
+  <p class="section-label">Authentic interaction funnel — users, not prompts</p>
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-n">515</div>
+      <div class="funnel-label">Total users with any AI activity</div>
+      <div class="funnel-pct">100%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-n">151</div>
+      <div class="funnel-label">Users who typed at least one manual prompt</div>
+      <div class="funnel-pct">29% of total</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-n">364</div>
+      <div class="funnel-label">Users who only clicked canned buttons — never typed</div>
+      <div class="funnel-pct">71% of total</div>
+    </div>
+  </div>
+  <p class="funnel-note">Note: 716 manual prompt events came from just 151 users — averaging 4.7 manual prompts each among those who typed at all.</p>
+
+  <div style="margin-top: 24px;">
+    <p class="section-label">User breakdown by engagement type</p>
+    <div class="bar-row">
+      <span class="bar-name">Canned prompts only</span>
+      <div class="bar-track"><div class="bar-fill" style="width:70.7%"></div></div>
+      <span class="bar-count">364</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">Both canned + manual</span>
+      <div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:19.8%"></div></div>
+      <span class="bar-count">102</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">Manual prompts only</span>
+      <div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:9.5%"></div></div>
+      <span class="bar-count">49</span>
+    </div>
+  </div>
+</div>
+
+<!-- Canned prompt breakdown -->
+<div class="section">
+  <p class="section-label">Canned prompt breakdown (590 total events)</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Prompt</th>
+        <th style="text-align:right; min-width:60px">Events</th>
+        <th style="text-align:right; min-width:50px">Share</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Is there any vulnerability in the pasted code?</td><td>232</td><td>39.3%</td></tr>
+      <tr><td>Explain the error</td><td>153</td><td>25.9%</td></tr>
+      <tr><td>Explain the current code</td><td>111</td><td>18.8%</td></tr>
+      <tr><td>Why Ethereum and decentralized applications are important…</td><td>24</td><td>4.1%</td></tr>
+      <tr><td>Let's create a new file together in the current workspace</td><td>20</td><td>3.4%</td></tr>
+      <tr><td>an ERC20 token workspace has been created. Compile and Deploy…</td><td>15</td><td>2.5%</td></tr>
+      <tr><td>Deploy the [contract] (dynamic)</td><td>10</td><td>1.7%</td></tr>
+      <tr><td>I would like to learn Web3 development…</td><td>7</td><td>1.2%</td></tr>
+      <tr><td>Review the file [filename] (dynamic)</td><td>7</td><td>1.2%</td></tr>
+      <tr><td>Give me more info about current debugging session</td><td>4</td><td>0.7%</td></tr>
+      <tr><td>Other canned prompts</td><td>7</td><td>1.2%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Authentic manual prompt samples -->
+<div class="section">
+  <p class="section-label">Sample authentic prompts (genuinely typed by users)</p>
+  <div class="sample-grid">
+    <div class="sample-card">
+      <span class="sample-tag">DeFi / tokenomics</span>
+      <p class="sample-text">after a user join with $20 mint 250 H4H and distribute the H4H this way: 30% GAS FUNDING & DONATION WALLET IS THE MAIN WALLET, 28% of 250 H4H goes to the Revenue Sharing POOL WALLET…</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Solidity debugging</span>
+      <p class="sample-text">Error encoding arguments: TypeError: invalid BigNumberish string: empty string (argument="value", value="", code=INVALID_ARGUMENT…)</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Code review</span>
+      <p class="sample-text">1. Prevent Duplication / Abuse — Add per-user tracking: Include a mapping(address => bool) public distributed; so each user can only claim tokens once…</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Language preference</span>
+      <p class="sample-text">用中文 / 中文回答 (Chinese language requests — 6 events, indicating a Chinese-speaking user segment)</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Solidity code paste</span>
+      <p class="sample-text">// SPDX-License-Identifier: MIT pragma solidity ^0.8.26; import {Script, console} from "forge-std/Script.sol"; … [pasted contract for review]</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Learning / exercise</span>
+      <p class="sample-text">contract LevelTwoOne is LevelOne(2) { function printNum() public override virtual { emit NumberEmitted(num); } } — fix this</p>
+    </div>
+  </div>
+</div>
+
+<!-- Key takeaways -->
+<div class="insight">
+  <h3>Key takeaways</h3>
+  <ul>
+    <li><strong>29% of users (151/515)</strong> engaged authentically — they typed their own prompts rather than clicking preset buttons. These are the users genuinely exploring the AI as a tool.</li>
+    <li><strong>71% of users (364/515)</strong> never typed a single message. They used only the canned buttons, which is still valuable product usage but does not reflect conversational AI engagement.</li>
+    <li>Among authentic users, engagement depth is meaningful — averaging <strong>4.7 manual prompts each</strong>, covering real Solidity debugging, contract architecture questions, and multi-language requests.</li>
+    <li>The top three canned prompts (vulnerability check, explain error, explain code) account for <strong>84% of all canned events</strong> — the button set is working well but is heavily skewed to a few high-utility actions.</li>
+    <li>This is <strong>one day of data</strong>. Trending this metric over time will be more meaningful than the absolute number.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <span>Remix IDE — Internal analytics</span>
+  <span>2026-05-30 · Single day snapshot</span>
+</div>
+
+</body>
+</html>
