@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remix IDE · AI Chat Authentic Interaction Report · 2026-05-18</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0f0f0f;
+    --white: #fafafa;
+    --gray-100: #f2f2f0;
+    --gray-200: #e4e4e0;
+    --gray-400: #9a9a94;
+    --gray-600: #5a5a54;
+    --accent: #1a1aff;
+    --accent-light: #e8e8ff;
+    --green: #1a7a3c;
+    --green-light: #e6f4ec;
+    --amber: #7a4a00;
+    --amber-light: #fff4e0;
+    --red: #7a1a1a;
+    --red-light: #fff0f0;
+    --border: 1px solid var(--gray-200);
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    background: var(--white);
+    color: var(--black);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); text-decoration: none; margin-bottom: 32px; }
+  .back-link:hover { color: var(--accent); }
+
+  .header { border-bottom: 2px solid var(--black); padding-bottom: 20px; margin-bottom: 40px; }
+  .header-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .header h1 { font-size: 28px; font-weight: 500; line-height: 1.2; margin-bottom: 8px; }
+  .header-meta { font-size: 13px; color: var(--gray-600); }
+
+  .callout { background: var(--amber-light); border-left: 3px solid #d4880a; padding: 14px 18px; margin-bottom: 40px; border-radius: 0 4px 4px 0; }
+  .callout p { font-size: 13px; color: var(--amber); line-height: 1.6; }
+  .callout strong { font-weight: 500; }
+
+  .callout-red { background: var(--red-light); border-left: 3px solid #c0392b; padding: 14px 18px; margin-bottom: 24px; border-radius: 0 4px 4px 0; }
+  .callout-red p { font-size: 13px; color: var(--red); line-height: 1.6; }
+  .callout-red strong { font-weight: 500; }
+
+  .callout-green { background: var(--green-light); border-left: 3px solid #1a7a3c; padding: 14px 18px; margin-bottom: 24px; border-radius: 0 4px 4px 0; }
+  .callout-green p { font-size: 13px; color: var(--green); line-height: 1.6; }
+  .callout-green strong { font-weight: 500; }
+
+  .section { margin-bottom: 48px; }
+  .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px; padding-bottom: 8px; border-bottom: var(--border); }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border: var(--border); margin-bottom: 40px; }
+  .metric { background: var(--white); padding: 20px; }
+  .metric-value { font-size: 36px; font-weight: 300; line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .metric-label { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+  .metric-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+  .funnel { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--gray-200); border: var(--border); margin-bottom: 12px; }
+  .funnel-step { background: var(--white); padding: 20px; position: relative; }
+  .funnel-step::after { content: '→'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--gray-400); z-index: 1; }
+  .funnel-step:last-child::after { display: none; }
+  .funnel-n { font-size: 32px; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .funnel-label { font-size: 12px; color: var(--gray-600); }
+  .funnel-pct { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+  .funnel-note { font-size: 12px; color: var(--gray-400); margin-bottom: 32px; }
+
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bar-name { font-size: 12px; color: var(--gray-600); min-width: 180px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-track { flex: 1; height: 8px; background: var(--gray-100); border-radius: 1px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 1px; background: var(--black); }
+  .bar-fill-accent { background: var(--accent); }
+  .bar-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-400); min-width: 32px; text-align: right; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; font-size: 11px; color: var(--gray-400); padding: 6px 12px 6px 0; border-bottom: 2px solid var(--black); letter-spacing: 0.03em; }
+  td { padding: 9px 12px 9px 0; border-bottom: var(--border); color: var(--black); vertical-align: top; }
+  td:last-child { text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--gray-600); white-space: nowrap; }
+  td:nth-last-child(2) { text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--gray-600); }
+  tr:last-child td { border-bottom: none; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border: var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 24px; }
+  .stat { background: var(--white); padding: 16px; }
+  .stat-value { font-size: 24px; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--gray-400); font-family: 'IBM Plex Mono', monospace; }
+
+  .insight { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 16px 20px; margin-top: 40px; }
+  .insight h3 { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--accent); }
+  .insight ul { padding-left: 16px; }
+  .insight li { font-size: 13px; color: var(--black); margin-bottom: 6px; line-height: 1.5; }
+
+  .sample-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sample-card { border: var(--border); padding: 14px; border-radius: 2px; background: var(--gray-100); }
+  .sample-text { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-600); line-height: 1.6; word-break: break-word; }
+  .sample-tag { display: inline-block; font-size: 10px; font-family: 'IBM Plex Mono', monospace; padding: 2px 6px; background: var(--green-light); color: var(--green); border-radius: 2px; margin-bottom: 8px; }
+  .sample-tag-amber { background: var(--amber-light); color: var(--amber); }
+  .sample-tag-red { background: var(--red-light); color: var(--red); }
+
+  .footer { margin-top: 60px; padding-top: 20px; border-top: var(--border); font-size: 12px; color: var(--gray-400); font-family: 'IBM Plex Mono', monospace; display: flex; justify-content: space-between; }
+
+  @media print {
+    body { padding: 20px; }
+    .back-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="../index.html">← All reports</a>
+
+<div class="header">
+  <p class="header-eyebrow">Remix IDE · AI Feature Analytics</p>
+  <h1>Authentic User Interaction Report</h1>
+  <p class="header-meta">Date: 2026-05-18 &nbsp;·&nbsp; Segment: Manual AI Prompt &nbsp;·&nbsp; Source: Matomo event log</p>
+</div>
+
+<div class="callout">
+  <p><strong>Context:</strong> May 18 was the busiest day in this dataset — 922 users, 2,049 prompts. A dominant pattern emerged: a large cohort of Chinese-language users submitting structured Solidity homework assignments, suggesting a university course or bootcamp using Remix as its platform.</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Overview</p>
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-value">922</div>
+      <div class="metric-label">Total users with AI activity</div>
+      <div class="metric-sub">unique sessions</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">2,049</div>
+      <div class="metric-label">Total prompts sent</div>
+      <div class="metric-sub">avg 2.2 per user</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">1,022</div>
+      <div class="metric-label">Canned prompts (buttons)</div>
+      <div class="metric-sub">49.9% of total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">1,027</div>
+      <div class="metric-label">Manual prompts (typed)</div>
+      <div class="metric-sub">50.1% of total</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-label">Authentic interaction funnel — users, not prompts</p>
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-n">922</div>
+      <div class="funnel-label">Total users with any AI activity</div>
+      <div class="funnel-pct">100%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-n">238</div>
+      <div class="funnel-label">Users who typed at least one manual prompt</div>
+      <div class="funnel-pct">25.8% of total</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-n">684</div>
+      <div class="funnel-label">Users who only clicked canned buttons — never typed</div>
+      <div class="funnel-pct">74.2% of total</div>
+    </div>
+  </div>
+  <p class="funnel-note">Note: 1,027 manual prompt events from 238 users — averaging 4.3 manual prompts each among those who typed at all.</p>
+
+  <div style="margin-top: 24px;">
+    <p class="section-label">User breakdown by engagement type</p>
+    <div class="bar-row">
+      <span class="bar-name">Canned prompts only</span>
+      <div class="bar-track"><div class="bar-fill" style="width:74.2%"></div></div>
+      <span class="bar-count">684</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">Both canned + manual</span>
+      <div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:17.4%"></div></div>
+      <span class="bar-count">160</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">Manual prompts only</span>
+      <div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:8.5%"></div></div>
+      <span class="bar-count">78</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-label">Distribution of manual prompts among engaged users (238)</p>
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-value">2</div><div class="stat-label">median</div></div>
+    <div class="stat"><div class="stat-value">4.3</div><div class="stat-label">mean</div></div>
+    <div class="stat"><div class="stat-value">5.5</div><div class="stat-label">std dev</div></div>
+    <div class="stat"><div class="stat-value">36</div><div class="stat-label">max</div></div>
+  </div>
+  <div class="bar-row"><span class="bar-name">1 prompt</span><div class="bar-track"><div class="bar-fill" style="width:34.5%"></div></div><span class="bar-count">82</span></div>
+  <div class="bar-row"><span class="bar-name">2 prompts</span><div class="bar-track"><div class="bar-fill" style="width:20.2%"></div></div><span class="bar-count">48</span></div>
+  <div class="bar-row"><span class="bar-name">3 prompts</span><div class="bar-track"><div class="bar-fill" style="width:10.1%"></div></div><span class="bar-count">24</span></div>
+  <div class="bar-row"><span class="bar-name">4 prompts</span><div class="bar-track"><div class="bar-fill" style="width:7.6%"></div></div><span class="bar-count">18</span></div>
+  <div class="bar-row"><span class="bar-name">5 prompts</span><div class="bar-track"><div class="bar-fill" style="width:5.9%"></div></div><span class="bar-count">14</span></div>
+  <div class="bar-row"><span class="bar-name">6–10 prompts</span><div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:11.3%"></div></div><span class="bar-count">27</span></div>
+  <div class="bar-row"><span class="bar-name">11–20 prompts</span><div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:8.0%"></div></div><span class="bar-count">19</span></div>
+  <div class="bar-row"><span class="bar-name">21+ prompts</span><div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:2.5%"></div></div><span class="bar-count">6</span></div>
+  <p style="font-size:12px;color:var(--gray-400);margin-top:12px;">Top 10% of engaged users → 41.7% of all manual prompts &nbsp;·&nbsp; Top 10 users: 36, 34, 28, 27, 26, 22, 20, 19, 19, 17</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Canned prompt breakdown (1,022 total events)</p>
+  <table>
+    <thead><tr><th>Prompt</th><th style="text-align:right">Events</th><th style="text-align:right">Share</th></tr></thead>
+    <tbody>
+      <tr><td>Is there any vulnerability in the pasted code?</td><td>400</td><td>39.1%</td></tr>
+      <tr><td>Explain the error</td><td>285</td><td>27.9%</td></tr>
+      <tr><td>Explain the current code</td><td>187</td><td>18.3%</td></tr>
+      <tr><td>Why Ethereum and decentralized applications are important…</td><td>42</td><td>4.1%</td></tr>
+      <tr><td>Let's create a new file together in the current workspace</td><td>38</td><td>3.7%</td></tr>
+      <tr><td>an ERC20 token workspace has been created. Compile and Deploy…</td><td>21</td><td>2.1%</td></tr>
+      <tr><td>Deploy the [contract] (dynamic — 10 variants)</td><td>15</td><td>1.5%</td></tr>
+      <tr><td>I would like to learn Web3 development…</td><td>6</td><td>0.6%</td></tr>
+      <tr><td>Give me more info about current debugging session</td><td>5</td><td>0.5%</td></tr>
+      <tr><td>Other canned prompts</td><td>23</td><td>2.2%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <p class="section-label">Notable authentic prompt patterns</p>
+
+  <div class="callout-green" style="margin-bottom:16px;">
+    <p><strong>Chinese university cohort (dominant signal).</strong> The single largest authentic pattern: multiple users submitting near-identical structured Solidity assignments in Chinese — NFT/digital collectible registries, property management token systems, ERC20 token specs. The same prompts appear 4–7 times across different user IDs, strongly suggesting a university course or bootcamp assignment set. This cohort is driving a significant share of May 18's elevated volume.</p>
+  </div>
+
+  <div class="sample-grid">
+    <div class="sample-card">
+      <span class="sample-tag">Chinese homework — NFT registry</span>
+      <p class="sample-text">文创数字藏品上链登记管理：定义藏品结构体（藏品ID、藏品名称、铸造人地址、是否在售）；通过 mapping(uint => 藏品结构体)… [7 users, near-identical]</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Chinese homework — property tokens</span>
+      <p class="sample-text">小区物业链上积分管理，积分用于兑换社区服务。功能要求：合约部署者为物业管理员，仅管理员可发放/扣除积分；必须使用 mapping… [4 users]</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Token spec — GameKing Coin</span>
+      <p class="sample-text">代币名称：GameKing Coin / 代币符号：GKC / 总供应量：1,000,000,000 GKC（10亿枚，无增发，永久固定）其中9.5亿在开发者钱包… [3 users]</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag">Solidity pasted for review</span>
+      <p class="sample-text">``` [code block] ``` Explain briefly the snippet above [multiple users pasting contracts directly]</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag sample-tag-amber">Russian language</span>
+      <p class="sample-text">на русском — 2 users requesting Russian-language responses. Second non-English language segment observed alongside the Chinese cohort.</p>
+    </div>
+    <div class="sample-card">
+      <span class="sample-tag sample-tag-amber">Tutorial follower</span>
+      <p class="sample-text">Step 2: Compile the Code (The Blueprint Check) — Click on the Solidity Compiler icon… [user pasting tutorial steps back into the AI, likely following a guide]</p>
+    </div>
+  </div>
+</div>
+
+<div class="insight">
+  <h3>Key takeaways</h3>
+  <ul>
+    <li><strong>Busiest day in dataset (922 users, 2,049 prompts)</strong> but authentic engagement rate actually dropped to 25.8% — the volume spike was driven by the Chinese homework cohort and canned button usage, not by organic explorers.</li>
+    <li>The <strong>Chinese university cohort</strong> is the most significant new finding. These are likely students completing assignments, not independent developers. They're real users getting value, but they're not a monetization target — they're probably using a free tier indefinitely and their engagement is episodic (assignment deadlines).</li>
+    <li>Canned prompt distribution is <strong>remarkably stable</strong> across all three days: vulnerability check ~39%, explain error ~27%, explain code ~18%. These three buttons account for 85%+ of all canned usage every day.</li>
+    <li>The <strong>power user tail is deeper</strong> on May 18 — top 10 users averaged 21.7 manual prompts each vs. ~17 on May 26/30. More heavy users on a busier day.</li>
+    <li>Top 10% concentration <strong>dropped to 41.7%</strong> (vs. ~48% on the other days) — slightly more evenly distributed engagement, possibly due to the homework cohort spreading prompts across more users.</li>
+    <li><strong>Russian language</strong> appeared as a second non-English segment alongside Chinese, suggesting Remix is reaching audiences well beyond its English-speaking core.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <span>Remix IDE — Internal analytics</span>
+  <span>2026-05-18 · Single day snapshot</span>
+</div>
+
+</body>
+</html>
